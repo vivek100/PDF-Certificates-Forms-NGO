@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+.monday-app {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+iframe {
+  height : 88vh
+}

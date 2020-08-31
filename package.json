@@ -1,0 +1,60 @@
+{
+  "name": "monday-integration-quickstart-app",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "npm run server",
+    "build": "react-scripts build",
+    "expose": "ngrok http 8301",
+    "server": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "stop": "kill-port 8301 && kill-port 4049 && kill-port 4040"
+  },
+  "dependencies": {
+    "@react-pdf/renderer": "^1.6.10",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "graphql": "^15.3.0",
+    "graphql-request": "^3.0.0",
+    "monday-sdk-js": "0.0.16",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-pdf": "^5.0.0",
+    "react-scripts": "3.4.0",
+    "react-slick": "^0.27.10",
+    "rn-fetch-blob": "^0.12.0",
+    "slick-carousel": "^1.8.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "concurrently": "^5.2.0",
+    "cross-port-killer": "^1.2.1",
+    "ngrok": "^3.2.7"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
+  }
+}
