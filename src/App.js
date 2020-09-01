@@ -54,6 +54,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Times-Roman',
   },
+  subtitle3: {
+    fontSize: 15,
+    margin: 12,
+    textAlign: 'center',
+    fontFamily: 'Courier',
+    fontStyle: 'Oblique',
+  },
   text: {
     margin: 12,
     fontSize: 14,
@@ -63,7 +70,6 @@ const styles = StyleSheet.create({
   image: {
     marginVertical: 15,
     marginHorizontal: 100,
-    height:'60%'
   },
   image2: {
     marginVertical: 15,
@@ -165,7 +171,9 @@ class App extends React.Component {
   getName = () => {
     const { boards, settings, itemIds} = this.state;
     console.log(boards);
-    var signerFilename = "https://sevabhava.in/assets/img/logo.png";
+    var signUrl = "https://www.pngitem.com/pimgs/m/332-3322454_fake-signature-png-fake-signatures-line-art-transparent.png";
+    var logoUrl = "https://sevabhava.in/assets/img/logo.png"
+    var disclaimer = "Webinar"
     const result = boards.map((board) => {
       console.log(board);
       return board.items
@@ -194,44 +202,18 @@ class App extends React.Component {
         });
     });
     console.log(result.length)
-    if (settings.signatureUploader) {
-      console.log("monday knows file is uploaded  "+settings.signatureUploader.id);
-      client.request(`query { assets (ids:[${settings.signatureUploader.id}]) { id, url_thumbnail}}`)
-      .then( async (data) =>{ 
 
-        signerFilename =  await data.assets[0].url_thumbnail;
-        let documents = result[0].map((val) => {  
-          console.log(val)
-          return (
-            <PDFViewer>
-              <Document>
-                <Page size="A4" style={styles.body}>
-                <Image
-                  style={styles.image}
-                  src="https://sevabhava.in/assets/img/logo.png"
-                />
-                <Text style={styles.title}>Certificate for Volunteering</Text>
-                <Text style={styles.subtitle}>This Certificate is presented to:</Text>
-                <Text style={styles.subtitle2}>{val}</Text>
-                <Text style={styles.subtitle}>For taking part in volunteering activities organised by: </Text>
-                <Text style={styles.subtitle2}>{this.orgName()}</Text>
-                <Image width='30px'
-                  style={styles.image2}
-                  src= {signerFilename}
-                />
-                <Text style={styles.subtitle}>Signed by: </Text>
-                <Text style={styles.subtitle2}>{this.signerName()}</Text>
-                </Page>
-              </Document>
-            </PDFViewer>
-          )});
-        console.log(documents)
-        this.setState({ names: documents});
-        return _.flatten(documents);
-        
-      });
+    if (settings.logoUrl) {
+      logoUrl = settings.logoUrl
     } else {
-      signerFilename= "https://img.pngio.com/digital-signature-signature-block-signatures-png-download-1296-signature-png-900_700.jpg"
+      logoUrl = "https://sevabhava.in/assets/img/logo.png"
+    }
+    if (settings.disclaimer) {
+      disclaimer = settings.disclaimer
+    } else {
+      disclaimer = "I understand that, based on the completion of this volunteer application and disclaimer form, the screening process, and any available volunteer training and orientation, Concerned NGO reserves the right to determine who will be approved as a volunteer. During an event, volunteers will be deployed at the discretion of Concerned NGO Volunteer Coordinator. I understand that volunteering with Concerned NGO will require travel to an event, and will require my being away from my job and home for a pre-determined length of time. I also understand that while Concerned NGO will cover the basic costs (i.e. meals), I will not be otherwise compensated for my time. I understand that I am not obligated, if called upon, to participate. While working with the Concerned NGO, I am expected to abide by the organization’s code of professional conduct, always modeling the highest professional standards. I agree to abide by the authority of the Concerned NGO and to follow all reasonable instructions while participating under their leadership. By signing below, you agree that you have read and understand the above disclaimer, and that all information you have provided in the application is true and accurate."
+    }
+
       let documents = result[0].map((val) => {  
         console.log(val)
         return (
@@ -240,26 +222,19 @@ class App extends React.Component {
               <Page size="A4" style={styles.body}>
               <Image
                 style={styles.image}
-                src={require('./badge.png')}
+                src={logoUrl}
               />
-              <Text style={styles.title}>Certificate for Volunteering</Text>
-              <Text style={styles.subtitle}>This Certificate is presented to:</Text>
-              <Text style={styles.subtitle2}>{val}</Text>
-              <Text style={styles.subtitle}>For taking part in volunteering activities organised by: </Text>
-              <Text style={styles.subtitle2}>{this.orgName()}</Text>
-              <Image width='30px'
-                style={styles.image}
-                src= {signerFilename}
-              />
-              <Text style={styles.subtitle}>Signed by: </Text>
-              <Text style={styles.subtitle2}>{this.signerName()}</Text>
+              <Text style={styles.title}>Volunteer Registration Form</Text>
+              <Text style={styles.subtitle2}>Volunteer Name: {val}</Text>
+              <Text style={styles.subtitle3}>{disclaimer}</Text>
+              <Text style={styles.subtitle2}>Ngo Name: {this.orgName()}</Text>
+              <Text style={styles.subtitle}>Sign here: </Text>
               </Page>
             </Document>
           </PDFViewer>
         )});
       console.log(documents)
       return _.flatten(documents);
-    }
     
   };
 
